@@ -1,0 +1,1877 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Engenharia, Projeto, ESG e Regulamentação Profissional</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #59636f;
+      --paper: #f6f2ea;
+      --panel: #ffffff;
+      --line: #d9d2c7;
+      --blue: #225f8e;
+      --green: #2d7a5c;
+      --gold: #ad741e;
+      --red: #963f3b;
+      --soft-blue: #edf6fb;
+      --soft-green: #edf7f2;
+      --soft-gold: #fff6e6;
+      --soft-red: #fff0ef;
+      --shadow: 0 22px 70px rgba(23, 33, 43, .16);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(34, 95, 142, .08), transparent 34%),
+        linear-gradient(180deg, #fbfaf7, var(--paper));
+    }
+
+    body { overflow: hidden; }
+
+    .deck {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      gap: 14px;
+      padding: 22px;
+    }
+
+    .slide {
+      display: none;
+      width: min(1220px, calc(100vw - 44px));
+      height: min(700px, calc(100vh - 118px));
+      margin: auto;
+      background: var(--panel);
+      border: 1px solid rgba(23, 33, 43, .12);
+      box-shadow: var(--shadow);
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .slide.active {
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 8px;
+      background: linear-gradient(90deg, var(--blue), var(--green), var(--gold));
+    }
+
+    .head {
+      padding: 30px 44px 15px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .body {
+      padding: 24px 44px 34px;
+      overflow: auto;
+    }
+
+    .tag {
+      margin: 0 0 8px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 980px;
+      margin-bottom: 18px;
+      font-size: 47px;
+      line-height: 1.04;
+      font-weight: 820;
+    }
+
+    h2 {
+      margin-bottom: 0;
+      font-size: 32px;
+      line-height: 1.12;
+      font-weight: 800;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 19px;
+      color: var(--blue);
+    }
+
+    .lead {
+      max-width: 1010px;
+      font-size: 21px;
+      line-height: 1.42;
+      color: #26323d;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 15px 16px;
+      background: #fffdfa;
+      line-height: 1.38;
+      font-size: 17px;
+    }
+
+    .card strong { color: var(--blue); }
+    .card.green strong { color: var(--green); }
+    .card.gold strong { color: var(--gold); }
+
+    ul, ol { margin: 0; padding-left: 22px; }
+    li { margin: 7px 0; line-height: 1.35; font-size: 18px; }
+    .compact li { font-size: 16px; margin: 5px 0; }
+
+    .note, .law, .check, .case {
+      border-left: 5px solid var(--gold);
+      background: var(--soft-gold);
+      padding: 12px 14px;
+      border-radius: 0 8px 8px 0;
+      font-size: 17px;
+      line-height: 1.38;
+    }
+
+    .law { border-left-color: var(--blue); background: var(--soft-blue); }
+    .check { border-left-color: var(--green); background: var(--soft-green); margin-top: 14px; }
+    .case { border-left-color: var(--red); background: var(--soft-red); }
+
+    .flow {
+      display: grid;
+      gap: 9px;
+      font-size: 19px;
+      line-height: 1.28;
+    }
+
+    .flow div {
+      padding: 11px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffdfa;
+    }
+
+    details.answer {
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffdfa;
+      overflow: hidden;
+    }
+
+    details.answer summary {
+      list-style: none;
+      cursor: pointer;
+      width: fit-content;
+      margin: 10px;
+      padding: 9px 13px;
+      border: 1px solid rgba(23, 33, 43, .2);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    details.answer summary::-webkit-details-marker { display: none; }
+    details.answer .answer-body {
+      padding: 0 14px 14px;
+      font-size: 16px;
+      line-height: 1.38;
+    }
+
+    .kahoot-slide .body {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 16px;
+    }
+
+    .quiz-question {
+      margin: 0;
+      font-size: 25px;
+      line-height: 1.24;
+      font-weight: 780;
+    }
+
+    .choices {
+      counter-reset: choice;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      align-content: stretch;
+    }
+
+    .choices.truefalse {
+      width: 100%;
+    }
+
+    .choice {
+      counter-increment: choice;
+      position: relative;
+      min-height: 82px;
+      border: 1px solid #d8e0e8;
+      border-radius: 8px;
+      padding: 16px 18px 16px 62px;
+      background: #ffffff;
+      color: var(--ink);
+      text-align: left;
+      font-size: 18px;
+      line-height: 1.28;
+      font-weight: 700;
+      box-shadow: 0 2px 9px rgba(23, 33, 43, .06);
+      cursor: pointer;
+      overflow-wrap: anywhere;
+    }
+
+    .choice::before {
+      content: counter(choice, upper-alpha);
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--soft-blue);
+      border: 1px solid rgba(34, 95, 142, .35);
+      color: var(--blue);
+      text-align: center;
+      font-size: 15px;
+      line-height: 1;
+      font-weight: 850;
+    }
+
+    .choice.red, .choice.blue, .choice.gold, .choice.green { background: #ffffff; }
+
+    .choice:hover {
+      border-color: rgba(34, 95, 142, .55);
+      background: #f8fbfe;
+      transform: translateY(-1px);
+    }
+
+    .choice.revealed {
+      opacity: .6;
+      filter: grayscale(.1);
+    }
+
+    .choice.correct {
+      opacity: 1;
+      filter: none;
+      border-color: rgba(45, 122, 92, .75);
+      background: var(--soft-green);
+      outline: 3px solid rgba(45, 122, 92, .18);
+    }
+
+    .choice.correct::before {
+      background: var(--green);
+      color: #ffffff;
+      border-color: var(--green);
+    }
+
+    .choice.wrong.selected {
+      opacity: 1;
+      border-color: rgba(150, 63, 59, .7);
+      background: var(--soft-red);
+      outline: 3px solid rgba(150, 63, 59, .14);
+    }
+
+    .choice.wrong.selected::before {
+      background: var(--red);
+      color: #ffffff;
+      border-color: var(--red);
+    }
+
+    .quiz-feedback {
+      min-height: 52px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px 14px;
+      background: #fffdfa;
+      font-size: 17px;
+      line-height: 1.35;
+      color: var(--muted);
+    }
+
+    .quiz-feedback.good {
+      border-left: 5px solid var(--green);
+      color: var(--ink);
+      background: var(--soft-green);
+    }
+
+    .quiz-feedback.bad {
+      border-left: 5px solid var(--red);
+      color: var(--ink);
+      background: var(--soft-red);
+    }
+
+    .fix-quiz {
+      margin-top: 14px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+    }
+
+    .fix-quiz .check {
+      margin-bottom: 10px;
+    }
+
+    .fix-quiz .choices {
+      gap: 8px;
+    }
+
+    .fix-quiz .choice {
+      min-height: 64px;
+      padding: 12px 12px 12px 48px;
+      font-size: 15px;
+      line-height: 1.18;
+    }
+
+    .fix-quiz .choice::before {
+      left: 12px;
+      top: 12px;
+      width: 24px;
+      height: 24px;
+      font-size: 13px;
+    }
+
+    .fix-quiz .quiz-feedback {
+      margin-top: 9px;
+      min-height: 44px;
+      font-size: 15px;
+    }
+
+    .title-slide { grid-template-rows: 1fr !important; }
+    .title-slide .body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 58px;
+    }
+
+    .stamp {
+      width: fit-content;
+      margin-bottom: 18px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: var(--soft-green);
+      color: var(--green);
+      font-weight: 850;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+
+    .subtitle {
+      max-width: 950px;
+      font-size: 23px;
+      color: var(--muted);
+      line-height: 1.38;
+    }
+
+    .footerline {
+      margin-top: 32px;
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .controls {
+      width: min(1220px, calc(100vw - 44px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      gap: 12px;
+      align-items: center;
+      color: var(--muted);
+    }
+
+    button {
+      min-height: 42px;
+      border: 1px solid rgba(23, 33, 43, .2);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 800;
+      padding: 0 16px;
+      cursor: pointer;
+    }
+
+    button:hover { border-color: var(--blue); color: var(--blue); }
+    button:disabled { opacity: .45; cursor: default; }
+
+    .progress {
+      height: 9px;
+      border-radius: 99px;
+      background: rgba(23, 33, 43, .12);
+      overflow: hidden;
+    }
+
+    .bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--blue), var(--green), var(--gold));
+    }
+
+    .counter {
+      font-weight: 800;
+      min-width: 76px;
+      text-align: right;
+    }
+
+    .kbd { font-size: 13px; color: var(--muted); }
+
+    @media (max-width: 860px) {
+      .deck {
+        min-height: 100dvh;
+        padding: 8px;
+        gap: 8px;
+      }
+
+      .slide {
+        width: calc(100vw - 16px);
+        height: calc(100dvh - 76px);
+        border-radius: 8px;
+      }
+
+      .slide::before { height: 5px; }
+
+      .head {
+        padding: 18px 16px 10px;
+      }
+
+      .body {
+        padding: 14px 16px 18px;
+      }
+
+      .title-slide .body {
+        padding: 26px 18px;
+      }
+
+      h1 {
+        font-size: clamp(28px, 8vw, 36px);
+        line-height: 1.06;
+      }
+
+      h2 {
+        font-size: clamp(22px, 6vw, 28px);
+        line-height: 1.12;
+      }
+
+      h3 { font-size: 17px; }
+
+      .tag {
+        font-size: 11px;
+        margin-bottom: 5px;
+      }
+
+      .lead,
+      .subtitle {
+        font-size: 16px;
+        line-height: 1.32;
+      }
+
+      .footerline {
+        margin-top: 18px;
+        font-size: 13px;
+      }
+
+      .grid,
+      .grid.three {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .card {
+        padding: 10px;
+        font-size: 13px;
+        line-height: 1.25;
+      }
+
+      .law,
+      .note,
+      .check,
+      .case {
+        padding: 9px 10px;
+        font-size: 13px;
+        line-height: 1.28;
+      }
+
+      .flow {
+        gap: 7px;
+        font-size: 14px;
+      }
+
+      .flow div {
+        padding: 8px 10px;
+      }
+
+      li {
+        font-size: 14px;
+        line-height: 1.28;
+        margin: 4px 0;
+      }
+
+      .compact li {
+        font-size: 12px;
+        margin: 3px 0;
+      }
+
+      .kahoot-slide .body {
+        gap: 10px;
+      }
+
+      .quiz-question {
+        font-size: clamp(17px, 4.8vw, 21px);
+        line-height: 1.2;
+      }
+
+      .choices,
+      .choices.truefalse {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .choice {
+        min-height: 72px;
+        padding: 11px 10px 11px 42px;
+        font-size: clamp(12px, 3.35vw, 15px);
+        line-height: 1.18;
+      }
+
+      .choice::before {
+        left: 10px;
+        top: 11px;
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+      }
+
+      .fix-quiz {
+        margin-top: 10px;
+        padding-top: 9px;
+      }
+
+      .fix-quiz .choices {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .fix-quiz .choice {
+        min-height: 58px;
+        padding: 9px 8px 9px 38px;
+        font-size: clamp(11px, 3vw, 13px);
+      }
+
+      .fix-quiz .choice::before {
+        left: 9px;
+        top: 9px;
+        width: 22px;
+        height: 22px;
+        font-size: 11px;
+      }
+
+      .quiz-feedback,
+      .fix-quiz .quiz-feedback {
+        min-height: 40px;
+        padding: 8px 10px;
+        font-size: 12px;
+        line-height: 1.25;
+      }
+
+      .controls {
+        width: calc(100vw - 16px);
+        grid-template-columns: auto 1fr auto;
+        gap: 8px;
+      }
+
+      .controls button {
+        min-height: 36px;
+        padding: 0 10px;
+        font-size: 13px;
+      }
+
+      .counter {
+        min-width: 54px;
+        font-size: 13px;
+      }
+
+      .kbd { display: none; }
+    }
+
+    @media (max-width: 420px) {
+      .head {
+        padding: 15px 12px 8px;
+      }
+
+      .body {
+        padding: 11px 12px 14px;
+      }
+
+      .grid,
+      .grid.three {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .choices,
+      .fix-quiz .choices {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .choice {
+        min-height: 64px;
+        padding-left: 36px;
+        font-size: 11px;
+      }
+
+      .choice::before {
+        left: 8px;
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+      }
+
+      .fix-quiz .choice {
+        min-height: 52px;
+        padding-left: 34px;
+      }
+    }
+
+    @media print {
+      body { overflow: visible; background: white; }
+      .deck { display: block; padding: 0; }
+      .slide, .slide.active {
+        display: grid;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        border: 0;
+        box-shadow: none;
+        border-radius: 0;
+        page-break-after: always;
+      }
+      .controls { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck">
+    <section class="slide title-slide active">
+      <div class="body">
+        <div class="stamp">Aula de revisão aprofundada</div>
+        <h1>Engenharia, Projeto, ESG e Regulamentação Profissional</h1>
+        <p class="subtitle">Material de prova baseado nos arquivos analisados: introdução ao projeto, acidentes na engenharia, Lei 5.194/1966, regulamentação profissional e Agenda 2030.</p>
+        <p class="footerline">Prof. Dr. [Nome] · Escola Politécnica da USP · Use as setas ou os botões para navegar</p>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Mapa da aula</p><h2>Do geral ao aplicado</h2></div>
+      <div class="body">
+        <div class="flow">
+          <div>1. O que define a engenharia como profissão de interesse social</div>
+          <div>2. Como o projeto organiza conhecimento técnico e previne erro</div>
+          <div>3. Como Lei 5.194/1966, CREA, ART e atribuições estruturam o exercício profissional</div>
+          <div>4. Como responsabilidade técnica se transforma em autoria, dever e risco jurídico</div>
+          <div>5. Como acidentes, ESG e Agenda 2030 ampliam a visão do engenheiro</div>
+          <div>6. Questões de fixação por tópico e simulado final com comentário após seleção</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Tema 1</p><h2>Engenharia como profissão de interesse social</h2></div>
+      <div class="body">
+        <p class="lead">A engenharia existe para transformar conhecimento científico em soluções materiais, energéticas, informacionais e organizacionais. Por isso, ela opera em uma zona de alto impacto: vida, patrimônio, meio ambiente, cidades, indústria e serviços essenciais.</p>
+        <div class="grid three">
+          <div class="card"><strong>Dimensão técnica</strong><br>Domínio de cálculo, materiais, processos, energia, métodos e normas.</div>
+          <div class="card green"><strong>Dimensão pública</strong><br>Uma obra, rede ou instalação pode afetar usuários, vizinhos, trabalhadores e comunidades.</div>
+          <div class="card gold"><strong>Dimensão jurídica</strong><br>A assinatura técnica vincula profissional, decisão e consequência.</div>
+        </div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> por que a engenharia não pode ser tratada como atividade puramente privada entre cliente e prestador?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">Porque todo contrato de engenharia precisa ser aprovado previamente pela prefeitura e pelo CREA.</button>
+            <button class="choice blue" data-correct="true" data-explain="Comentário: o resultado técnico pode atingir terceiros e a coletividade: segurança estrutural, risco elétrico, saneamento, mobilidade, meio ambiente e continuidade de serviços. Essa é a base do Art. 1º da Lei 5.194/1966.">Porque seus resultados podem afetar terceiros e a coletividade, mesmo quando contratados por um cliente privado.</button>
+            <button class="choice gold" data-correct="false">Porque toda atividade de engenharia é obrigatoriamente serviço público, ainda que prestada por empresa privada.</button>
+            <button class="choice green" data-correct="false">Porque o engenheiro responde apenas perante o contratante, desde que haja contrato escrito.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Art. 1º na prática</p><h2>Interesse social e humano como critério jurídico</h2></div>
+      <div class="body">
+        <p class="law"><strong>Ideia central do Art. 1º:</strong> as profissões regulamentadas são caracterizadas por realizações de interesse social e humano, como recursos naturais, locomoção, comunicações, edificações, serviços urbanos, equipamentos regionais e desenvolvimento industrial e agropecuário.</p>
+        <div class="grid">
+          <div class="card"><strong>Exemplo civil:</strong><br>Uma ponte mal projetada compromete mobilidade, economia local e segurança de usuários.</div>
+          <div class="card"><strong>Exemplo elétrica:</strong><br>Uma instalação sem proteção adequada pode causar choque, incêndio e interrupção de serviço essencial.</div>
+        </div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> em uma prova, como reconhecer uma questão ligada ao Art. 1º?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">Pela menção a multas, suspensão e cancelamento de registro profissional.</button>
+            <button class="choice blue" data-correct="false">Pela discussão sobre carteira profissional, número de registro e fé pública.</button>
+            <button class="choice gold" data-correct="true" data-explain="Comentário: o Art. 1º caracteriza a profissão por realizações de interesse social e humano: recursos naturais, comunicações, edificações, serviços urbanos e desenvolvimento produtivo. Multa e carteira pertencem a outros pontos da lei.">Pela presença de interesse social, impacto humano, infraestrutura, recursos naturais, comunicações ou desenvolvimento produtivo.</button>
+            <button class="choice green" data-correct="false">Pela definição de atividades privativas como perícia, vistoria, fiscalização e parecer técnico.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Modalidades</p><h2>Civil e elétrica: campos diferentes, responsabilidade comum</h2></div>
+      <div class="body">
+        <div class="grid">
+          <div class="card">
+            <h3>Engenharia Civil</h3>
+            <ul class="compact">
+              <li>Edificações, estruturas, fundações e patologias construtivas.</li>
+              <li>Transportes, saneamento, recursos hídricos e planejamento urbano.</li>
+              <li>Riscos típicos: colapso, recalque, incêndio, infiltração, interdição e dano ambiental.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Engenharia Elétrica</h3>
+            <ul class="compact">
+              <li>Geração, transmissão, distribuição e utilização de energia.</li>
+              <li>Instalações, máquinas, dispositivos de proteção, controle, automação e telecomunicações.</li>
+              <li>Riscos típicos: choque, arco elétrico, curto-circuito, sobrecarga, incêndio e blackout.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> um engenheiro pode atuar em qualquer área da engenharia só por ser engenheiro?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">Sim, pois o Art. 7º autoriza qualquer engenheiro a exercer todas as atividades técnicas da profissão.</button>
+            <button class="choice blue" data-correct="false">Sim, desde que a obra seja pequena e o contratante aceite a responsabilidade.</button>
+            <button class="choice gold" data-correct="true" data-explain="Comentário: a atuação exige formação compatível, atribuições registradas, habilitação legal e competência técnica. O Art. 7º lista atividades gerais, mas não apaga os limites de modalidade.">Não; ele deve respeitar formação, atribuições registradas, habilitação legal e limites técnicos.</button>
+            <button class="choice green" data-correct="false">Não, exceto quando possuir carteira profissional, pois ela substitui todas as atribuições específicas.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Tema 2</p><h2>Projeto de engenharia: mais que desenho</h2></div>
+      <div class="body">
+        <p class="lead">Projeto é o conjunto de informações técnicas que orienta a execução segura de uma obra, instalação, sistema ou processo. Ele traduz uma necessidade em solução verificável.</p>
+        <div class="grid three">
+          <div class="card"><strong>Representa</strong><br>Desenhos, plantas, diagramas, modelos, memoriais e quantitativos.</div>
+          <div class="card green"><strong>Justifica</strong><br>Cálculos, critérios, normas adotadas, premissas e limites de uso.</div>
+          <div class="card gold"><strong>Controla</strong><br>Execução, fiscalização, orçamento, qualidade, manutenção e responsabilidade.</div>
+        </div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> por que dizer que projeto é apenas desenho é conceitualmente errado?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">Porque o desenho deixou de ter validade técnica depois da adoção de modelos digitais.</button>
+            <button class="choice blue" data-correct="true" data-explain="Comentário: desenho é só uma das representações. Projeto também envolve cálculo, memorial, especificação, norma, compatibilização, critérios de desempenho e responsabilidade técnica.">Porque o desenho representa a solução, mas o projeto inclui cálculo, memorial, especificação, normas, compatibilização e responsabilidade técnica.</button>
+            <button class="choice gold" data-correct="false">Porque o projeto só existe quando a obra já terminou e pode ser conferida em campo.</button>
+            <button class="choice green" data-correct="false">Porque o projeto é essencialmente um orçamento, e os desenhos são anexos secundários.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Sequência técnica</p><h2>Como um projeto nasce e amadurece</h2></div>
+      <div class="body">
+        <div class="flow">
+          <div><strong>Problema:</strong> necessidade do cliente ou da sociedade, restrições e objetivo.</div>
+          <div><strong>Levantamento:</strong> dados de campo, normas, solo, cargas, demanda energética, orçamento e prazo.</div>
+          <div><strong>Concepção:</strong> alternativas técnicas, análise de viabilidade e escolha fundamentada.</div>
+          <div><strong>Detalhamento:</strong> cálculos, desenhos, especificações, memoriais, quantitativos e ART.</div>
+          <div><strong>Execução e controle:</strong> fiscalização, registros, mudanças de projeto, comissionamento e manutenção.</div>
+        </div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> em qual etapa o erro costuma ser mais barato de corrigir?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="true" data-explain="Comentário: corrigir no início evita retrabalho, desperdício, atraso e risco de segurança. Quanto mais tarde o erro aparece, maior o custo técnico e econômico.">Nas etapas iniciais de concepção e projeto, antes da execução física.</button>
+            <button class="choice blue" data-correct="false">Durante a execução, porque a equipe de obra consegue adaptar soluções sem nova análise.</button>
+            <button class="choice gold" data-correct="false">Após a entrega, pois o uso real revela todos os problemas e dispensa compatibilização prévia.</button>
+            <button class="choice green" data-correct="false">No orçamento final, quando já se conhece o custo total da obra.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Compatibilização</p><h2>A prova adora conflito entre disciplinas</h2></div>
+      <div class="body">
+        <p class="lead">Compatibilizar é integrar projetos para identificar conflitos antes da execução. É uma etapa decisiva para evitar improviso no canteiro.</p>
+        <div class="grid">
+          <div class="card">
+            <h3>Conflitos comuns</h3>
+            <ul class="compact">
+              <li>Eletroduto passando por viga ou pilar.</li>
+              <li>Tubulação hidráulica colidindo com estrutura.</li>
+              <li>Altura livre insuficiente em shafts, forros e garagens.</li>
+              <li>Carga elétrica prevista menor que a demanda real.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Consequências</h3>
+            <ul class="compact">
+              <li>Retrabalho e aumento de custo.</li>
+              <li>Atraso e perda de produtividade.</li>
+              <li>Improvisos sem cálculo ou sem responsável.</li>
+              <li>Risco estrutural, elétrico, hidráulico ou de incêndio.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> compatibilização é atividade de projeto ou de obra?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">É exclusivamente de obra, pois só no canteiro se descobre se os projetos são compatíveis.</button>
+            <button class="choice blue" data-correct="false">É desnecessária quando cada projetista assina sua própria ART.</button>
+            <button class="choice gold" data-correct="true" data-explain="Comentário: a compatibilização deve detectar conflitos antes da execução. Pode haver revisão em obra, mas o objetivo é reduzir improvisos e alterações emergenciais.">É principalmente atividade de projeto, com revisões possíveis em obra quando surgirem mudanças ou conflitos.</button>
+            <button class="choice green" data-correct="false">É uma etapa apenas administrativa, sem relação direta com segurança ou custo.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Normas técnicas</p><h2>ABNT/NBR e julgamento profissional</h2></div>
+      <div class="body">
+        <p class="lead">Normas técnicas consolidam requisitos mínimos, métodos e boas práticas. Elas ajudam a demonstrar diligência, mas não substituem a responsabilidade do engenheiro.</p>
+        <ul>
+          <li>Norma técnica orienta critérios de segurança, desempenho, ensaio, execução e manutenção.</li>
+          <li>Descumprimento pode indicar falha técnica, especialmente se houver dano.</li>
+          <li>Cumprir norma não autoriza ignorar condições específicas do caso real.</li>
+          <li>Quando há lacuna normativa, o profissional deve justificar critérios com base técnica.</li>
+        </ul>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> seguir a norma elimina totalmente a responsabilidade do engenheiro?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">Sim, porque norma técnica funciona como autorização automática para qualquer solução.</button>
+            <button class="choice blue" data-correct="true" data-explain="Comentário: a norma ajuda a demonstrar boa prática, mas o profissional continua responsável por premissas, aplicação correta, caso concreto, fiscalização e decisões técnicas.">Não; a norma orienta boas práticas, mas o profissional ainda responde pela aplicação correta e pelas decisões técnicas.</button>
+            <button class="choice gold" data-correct="false">Sim, desde que a norma seja citada no memorial, ainda que não tenha sido aplicada corretamente.</button>
+            <button class="choice green" data-correct="false">Não, porque normas técnicas não têm qualquer relevância para avaliar diligência profissional.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Tema 3</p><h2>Regulamentação profissional: por que existe?</h2></div>
+      <div class="body">
+        <p class="lead">A regulamentação separa a atuação técnica responsável da atuação improvisada. Ela define quem pode exercer, quais atos exigem habilitação, como a responsabilidade é registrada e como a fiscalização ocorre.</p>
+        <div class="grid three">
+          <div class="card"><strong>CONFEA</strong><br>Normatização, coordenação e diretrizes gerais do sistema profissional.</div>
+          <div class="card green"><strong>CREA</strong><br>Registro, fiscalização e disciplina do exercício na região.</div>
+          <div class="card gold"><strong>ART</strong><br>Anotação de Responsabilidade Técnica, instituída pela Lei 6.496/1977.</div>
+        </div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> o CREA existe para defender salário de engenheiro?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">Sim, pois sua função principal é negociar piso salarial e jornada profissional.</button>
+            <button class="choice blue" data-correct="false">Sim, mas apenas quando a empresa também possui registro no conselho.</button>
+            <button class="choice gold" data-correct="true" data-explain="Comentário: o CREA fiscaliza o exercício profissional e protege a sociedade quanto à habilitação e responsabilidade técnica. Defesa salarial pertence a sindicatos, Justiça do Trabalho e legislação própria.">Não; sua função central é fiscalizar o exercício profissional e proteger a sociedade quanto à habilitação técnica.</button>
+            <button class="choice green" data-correct="false">Não, porque o CREA é apenas órgão de emissão de diplomas universitários.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Habilitação</p><h2>Diploma, registro, atribuição e ART</h2></div>
+      <div class="body">
+        <div class="flow">
+          <div><strong>Diploma:</strong> comprova formação acadêmica, mas não basta para o exercício legal.</div>
+          <div><strong>Registro no CREA:</strong> habilita o profissional a exercer atividades de engenharia em sua jurisdição.</div>
+          <div><strong>Atribuições:</strong> delimitam o campo técnico conforme formação, currículo e normativos do sistema.</div>
+          <div><strong>ART:</strong> documento que vincula profissional, contratante, serviço técnico e responsabilidade.</div>
+        </div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> qual é a diferença entre estar formado e estar legalmente habilitado?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">Não há diferença: o diploma autoriza automaticamente qualquer exercício profissional.</button>
+            <button class="choice blue" data-correct="true" data-explain="Comentário: diploma comprova formação; habilitação legal exige registro no CREA, respeito às atribuições e ART quando aplicável.">Formação é comprovada pelo diploma; habilitação legal exige registro no CREA, atribuições compatíveis e responsabilidade técnica quando aplicável.</button>
+            <button class="choice gold" data-correct="false">Estar habilitado significa ter experiência prática, ainda que sem registro profissional.</button>
+            <button class="choice green" data-correct="false">Estar formado depende do CREA; estar habilitado depende apenas da universidade.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Lei 5.194/1966</p><h2>Art. 6º: hipóteses de exercício ilegal</h2></div>
+      <div class="body">
+        <p class="law"><strong>Paráfrase fiel:</strong> exerce ilegalmente quem pratica atos reservados sem registro, atua fora das atribuições, empresta nome sem participação real, continua atuando suspenso ou, como empresa, exerce atividade reservada sem profissional habilitado e efetivo.</p>
+        <div class="grid">
+          <div class="card"><strong>Erro frequente:</strong><br>Achar que só o leigo sem diploma pratica exercício ilegal.</div>
+          <div class="card"><strong>Correção:</strong><br>O profissional registrado também pode cometer exercício ilegal se extrapolar atribuições ou emprestar nome.</div>
+        </div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> um engenheiro civil pode assinar projeto elétrico predial complexo se não tiver atribuição para isso?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">Sim, se o projeto for de uma edificação civil, pois a obra principal é civil.</button>
+            <button class="choice blue" data-correct="false">Sim, desde que ele registre ART e o cliente aceite expressamente.</button>
+            <button class="choice gold" data-correct="true" data-explain="Comentário: o registro no CREA não autoriza extrapolar atribuições. Atuar fora delas se conecta ao Art. 6º, exercício ilegal.">Não; mesmo registrado, ele deve respeitar suas atribuições, e extrapolá-las se enquadra na lógica do Art. 6º.</button>
+            <button class="choice green" data-correct="false">Não, exceto se a prefeitura aprovar o projeto antes da execução.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Lei 5.194/1966</p><h2>Art. 7º: atividades profissionais</h2></div>
+      <div class="body">
+        <p class="law"><strong>Paráfrase fiel:</strong> as atividades incluem cargos técnicos, planejamento, projeto, estudos, análises, vistorias, perícias, pareceres, ensino, pesquisa, fiscalização, direção, execução de obras e produção técnica especializada.</p>
+        <div class="grid">
+          <div class="card">
+            <h3>Atos de concepção e análise</h3>
+            <ul class="compact"><li>Planejamento e projeto.</li><li>Estudos, avaliações, perícias e pareceres.</li><li>Ensino, pesquisa e ensaios.</li></ul>
+          </div>
+          <div class="card">
+            <h3>Atos de realização e controle</h3>
+            <ul class="compact"><li>Fiscalização e direção técnica.</li><li>Execução de obras e serviços.</li><li>Produção técnica especializada.</li></ul>
+          </div>
+        </div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> por que o Art. 7º é central para compreender as atribuições profissionais?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="true" data-explain="Comentário: o Art. 7º enumera atividades como projeto, estudo, perícia, fiscalização, direção e execução. O ponto de atenção é que esse artigo não elimina os limites de formação e atribuição específica.">Porque enumera atividades gerais do exercício profissional, como projeto, perícia, fiscalização, direção e execução.</button>
+            <button class="choice blue" data-correct="false">Porque define as penalidades aplicáveis ao profissional que descumpre a lei.</button>
+            <button class="choice gold" data-correct="false">Porque caracteriza a profissão pelo interesse social e humano, sem tratar de atividades.</button>
+            <button class="choice green" data-correct="false">Porque institui a carteira profissional e substitui o diploma para efeitos legais.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Lei 5.194/1966</p><h2>Art. 18: autoria e alteração de projeto</h2></div>
+      <div class="body">
+        <p class="law"><strong>Paráfrase fiel:</strong> alterações em projeto ou plano original devem ser feitas pelo autor. Se o autor estiver impedido ou se recusar, outro profissional habilitado pode alterar, desde que assuma a responsabilidade pelo projeto modificado.</p>
+        <div class="case"><strong>Caso típico:</strong> durante a obra, decide-se abrir uma passagem em uma viga para adequar instalações. Isso não é decisão de pedreiro, mestre de obras ou cliente. Exige análise técnica, eventual recálculo e responsável habilitado.</div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> quem responde pela alteração feita por outro profissional?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">Sempre o autor original, mesmo quando não participou da alteração.</button>
+            <button class="choice blue" data-correct="true" data-explain="Comentário: pelo Art. 18, quem altera projeto de outro autor, quando habilitado e nas hipóteses permitidas, assume responsabilidade pelo projeto ou plano modificado.">O profissional habilitado que realizou a alteração e assumiu o projeto ou plano modificado.</button>
+            <button class="choice gold" data-correct="false">O CREA, pois fiscaliza o exercício profissional e aprova tecnicamente a alteração.</button>
+            <button class="choice green" data-correct="false">O contratante, pois foi ele quem solicitou a modificação.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Lei 5.194/1966</p><h2>Art. 56: carteira profissional</h2></div>
+      <div class="body">
+        <p class="law"><strong>Paráfrase fiel:</strong> aos profissionais registrados será fornecida carteira profissional com número de registro, natureza do título, especializações e elementos de identificação. A carteira substitui o diploma para efeitos da lei, vale como identidade profissional e tem fé pública.</p>
+        <div class="grid">
+          <div class="card"><strong>O que cobra:</strong><br>Identificação profissional, registro, título e prova formal de habilitação perante o sistema.</div>
+          <div class="card"><strong>Armadilha:</strong><br>Não é o artigo das infrações e penalidades. Infrações estão especialmente no Art. 6º; multas, no Título IV.</div>
+        </div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> se a questão falar em carteira profissional, fé pública e número de registro, qual artigo lembrar?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">Art. 1º, porque trata do interesse social e humano.</button>
+            <button class="choice blue" data-correct="false">Art. 6º, porque trata de exercício ilegal.</button>
+            <button class="choice gold" data-correct="false">Art. 7º, porque trata das atividades profissionais.</button>
+            <button class="choice green" data-correct="true" data-explain="Comentário: o Art. 56 trata da carteira profissional, número de registro, título, especializações, identidade profissional e fé pública.">Art. 56, porque trata da carteira profissional e de seus efeitos legais.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Responsabilidade técnica</p><h2>Assinar é assumir tecnicamente</h2></div>
+      <div class="body">
+        <p class="lead">Responsabilidade técnica é o vínculo entre profissional habilitado e atividade técnica assumida. Ela tem dimensão ética, administrativa, civil e, em casos graves, penal.</p>
+        <ul>
+          <li><strong>Ética:</strong> atuar com competência, honestidade e zelo.</li>
+          <li><strong>Administrativa:</strong> responder perante CREA e órgãos públicos.</li>
+          <li><strong>Civil:</strong> reparar danos causados por falha técnica.</li>
+          <li><strong>Penal:</strong> responder quando conduta gera crime, como lesão, morte ou risco coletivo.</li>
+        </ul>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> uma ART transforma automaticamente um serviço ruim em serviço regular?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">Sim, porque a ART é a aprovação técnica final do CREA sobre o conteúdo do serviço.</button>
+            <button class="choice blue" data-correct="true" data-explain="Comentário: a ART registra responsabilidade técnica, mas não substitui qualidade, conformidade normativa, fiscalização, competência e participação efetiva.">Não; ela registra responsabilidade, mas não substitui qualidade técnica, conformidade normativa e participação efetiva.</button>
+            <button class="choice gold" data-correct="false">Sim, desde que o contratante tenha assinado o contrato e pago as taxas.</button>
+            <button class="choice green" data-correct="false">Não, porque a ART não tem nenhuma relação com responsabilidade técnica.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Autoria técnica</p><h2>Nome no papel sem participação real é risco alto</h2></div>
+      <div class="body">
+        <div class="grid three">
+          <div class="card"><strong>Competência</strong><br>Atuar dentro da formação, das atribuições e do domínio técnico real.</div>
+          <div class="card green"><strong>Diligência</strong><br>Verificar premissas, acompanhar execução, registrar decisões e corrigir desvios.</div>
+          <div class="card gold"><strong>Transparência</strong><br>Não ocultar limitações, conflitos, riscos, improvisos ou alterações relevantes.</div>
+        </div>
+        <p class="case" style="margin-top:14px"><strong>Situação de prova:</strong> empresa cadastra engenheiro como responsável técnico, mas ele não acompanha obras, não revisa projetos e não participa das decisões.</p>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> qual expressão do Art. 6º aparece nesse caso?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">Exercer atividade de interesse social e humano.</button>
+            <button class="choice blue" data-correct="false">Alterar projeto de autoria própria durante a execução.</button>
+            <button class="choice gold" data-correct="true" data-explain="Comentário: o caso descreve uso do nome profissional sem participação real nos trabalhos, uma hipótese expressa de exercício ilegal pelo Art. 6º.">Emprestar o nome sem real participação nos trabalhos.</button>
+            <button class="choice green" data-correct="false">Emitir carteira profissional com fé pública.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Acidentes na engenharia</p><h2>Falha técnica quase nunca é evento isolado</h2></div>
+      <div class="body">
+        <p class="lead">Acidentes costumam nascer de uma cadeia: premissa errada, projeto incompleto, execução improvisada, fiscalização insuficiente, manutenção negligenciada e gestão de risco fraca.</p>
+        <div class="flow">
+          <div>Falha de levantamento ou diagnóstico</div>
+          <div>Erro de projeto, cálculo, especificação ou compatibilização</div>
+          <div>Execução fora do projeto ou com material inadequado</div>
+          <div>Fiscalização ausente ou sem registros</div>
+          <div>Uso indevido, falta de manutenção e agravamento progressivo</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Três categorias clássicas</p><h2>Imperícia, negligência e imprudência</h2></div>
+      <div class="body">
+        <div class="grid three">
+          <div class="card"><strong>Imperícia</strong><br>Falta de conhecimento ou habilidade técnica. Exemplo: dimensionar fundação sem domínio de geotecnia.</div>
+          <div class="card green"><strong>Negligência</strong><br>Omissão ou descuido. Exemplo: não verificar concreto, aterramento ou manutenção periódica.</div>
+          <div class="card gold"><strong>Imprudência</strong><br>Ação precipitada. Exemplo: acelerar cura do concreto ou energizar sistema sem testes.</div>
+        </div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> fiscal não verifica a qualidade do concreto antes da concretagem. Qual categoria aparece?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">Imperícia, necessariamente, porque toda falha em obra decorre de falta de conhecimento.</button>
+            <button class="choice blue" data-correct="true" data-explain="Comentário: a situação mostra omissão de um dever de verificação/fiscalização. Isso é negligência.">Negligência, pois houve omissão de dever de verificação e fiscalização.</button>
+            <button class="choice gold" data-correct="false">Imprudência, pois a conduta principal foi uma ação precipitada e arriscada.</button>
+            <button class="choice green" data-correct="false">Caso fortuito, pois o fiscal não controla a resistência final do concreto.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Engenharia Civil</p><h2>Falhas que derrubam obras ou interditam sistemas</h2></div>
+      <div class="body">
+        <div class="grid">
+          <div class="card">
+            <h3>Causas técnicas recorrentes</h3>
+            <ul class="compact">
+              <li>Fundações inadequadas por sondagem insuficiente.</li>
+              <li>Subdimensionamento de cargas e esforços.</li>
+              <li>Concreto, aço ou execução fora de especificação.</li>
+              <li>Ausência de projeto de incêndio ou rotas de fuga deficientes.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Sinais de alerta</h3>
+            <ul class="compact">
+              <li>Fissuras evolutivas, recalques, corrosão e infiltrações.</li>
+              <li>Uso alterado sem reavaliação de carga.</li>
+              <li>Manutenção inexistente.</li>
+              <li>Ocupação irregular e ausência de responsável técnico.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> por que manutenção também é tema de engenharia?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">Porque manutenção serve apenas para melhorar estética e valorização imobiliária.</button>
+            <button class="choice blue" data-correct="false">Porque, após entregue, a obra deixa de depender de projeto e passa a depender só do usuário.</button>
+            <button class="choice gold" data-correct="true" data-explain="Comentário: estruturas e sistemas degradam com uso, ambiente e tempo; sem inspeção e manutenção, uma condição segura pode se tornar risco de colapso, incêndio ou interdição.">Porque estruturas e sistemas degradam, e a falta de inspeção pode transformar uma condição segura em risco.</button>
+            <button class="choice green" data-correct="false">Porque manutenção substitui a necessidade de projeto detalhado quando a obra é simples.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Engenharia Elétrica</p><h2>Riscos não aparentes e consequências técnicas</h2></div>
+      <div class="body">
+        <div class="grid">
+          <div class="card">
+            <h3>Falhas comuns</h3>
+            <ul class="compact">
+              <li>Sobrecarga de circuitos e dimensionamento inadequado.</li>
+              <li>Curto-circuito por isolamento degradado.</li>
+              <li>Aterramento inexistente ou ineficaz.</li>
+              <li>Proteção incompatível com corrente de curto e demanda real.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Consequências</h3>
+            <ul class="compact">
+              <li>Choque elétrico e morte.</li>
+              <li>Incêndio e explosão.</li>
+              <li>Paralisação de serviços essenciais.</li>
+              <li>Danos a equipamentos e perdas econômicas.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> por que uma instalação que “funciona” ainda pode estar tecnicamente irregular?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="true" data-explain="Comentário: funcionamento aparente não comprova proteção, aterramento, capacidade de carga, conformidade normativa nem adequação ao uso. Uma instalação pode energizar e ainda ser perigosa.">Porque funcionamento aparente não comprova proteção, aterramento, capacidade de carga, norma ou adequação ao uso.</button>
+            <button class="choice blue" data-correct="false">Porque toda instalação elétrica precisa falhar antes de ser considerada irregular.</button>
+            <button class="choice gold" data-correct="false">Porque regularidade elétrica depende apenas da conta de energia estar ativa.</button>
+            <button class="choice green" data-correct="false">Porque só o fabricante dos equipamentos pode avaliar a segurança da instalação.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Prevenção de acidentes</p><h2>O ciclo da engenharia segura</h2></div>
+      <div class="body">
+        <div class="flow">
+          <div><strong>Projeto correto:</strong> premissas claras, normas, cálculo e compatibilização.</div>
+          <div><strong>Execução controlada:</strong> materiais especificados, equipe qualificada e registros.</div>
+          <div><strong>Fiscalização efetiva:</strong> inspeções, ensaios, aprovação de etapas e correções.</div>
+          <div><strong>Manutenção:</strong> inspeção periódica, reparo, atualização e documentação.</div>
+          <div><strong>Responsabilidade:</strong> ART, autoria, rastreabilidade e limites de atribuição.</div>
+        </div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> qual elo do ciclo costuma desaparecer em obras de baixo controle?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">A demanda inicial, porque toda obra começa sem problema definido.</button>
+            <button class="choice blue" data-correct="false">O projeto arquitetônico, porque ele não interfere em segurança.</button>
+            <button class="choice gold" data-correct="true" data-explain="Comentário: sem fiscalização efetiva e registros, desvios de execução permanecem sem controle até aparecerem como patologia, acidente ou disputa jurídica.">A fiscalização efetiva e documentada, que identifica desvios antes que virem patologia ou acidente.</button>
+            <button class="choice green" data-correct="false">A manutenção, porque ela só começa depois de décadas de uso.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">ESG e Agenda 2030</p><h2>Engenharia no centro da sustentabilidade</h2></div>
+      <div class="body">
+        <p class="lead">A Agenda 2030, adotada por 193 países em 2015, organiza 17 ODS e 169 metas. A engenharia transforma essas metas em sistemas físicos, energéticos, urbanos e produtivos.</p>
+        <div class="grid three">
+          <div class="card"><strong>Ambiental</strong><br>Emissões, água, energia, resíduos, materiais e ciclo de vida.</div>
+          <div class="card green"><strong>Social</strong><br>Segurança, acesso, comunidades, trabalhadores, inclusão e saúde pública.</div>
+          <div class="card gold"><strong>Governança</strong><br>Conformidade, ética, fiscalização, transparência, indicadores e gestão de risco.</div>
+        </div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> por que ESG não é sinônimo de “meio ambiente”?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">Porque ESG trata apenas de indicadores financeiros de empresas sustentáveis.</button>
+            <button class="choice blue" data-correct="true" data-explain="Comentário: ESG combina ambiental, social e governança. Um projeto sustentável deve reduzir impactos ambientais, proteger pessoas e ser conduzido com legalidade, transparência e responsabilidade.">Porque ESG integra ambiental, social e governança, incluindo impacto ecológico, pessoas, ética, conformidade e gestão de riscos.</button>
+            <button class="choice gold" data-correct="false">Porque meio ambiente pertence apenas ao ODS 13, enquanto ESG pertence apenas ao setor financeiro.</button>
+            <button class="choice green" data-correct="false">Porque ESG substitui normas técnicas e torna dispensável a responsabilidade profissional.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">ODS aplicados</p><h2>Onde cada engenharia aparece</h2></div>
+      <div class="body">
+        <div class="grid">
+          <div class="card"><strong>ODS 6: Água limpa e saneamento</strong><br>Sistemas de abastecimento, coleta e tratamento de esgoto, drenagem, reúso e gestão hídrica. No Brasil, dialoga com a Lei 14.026/2020.</div>
+          <div class="card"><strong>ODS 7: Energia acessível e limpa</strong><br>Geração renovável, eficiência energética, smart grids, armazenamento e redução de perdas.</div>
+          <div class="card"><strong>ODS 9: Indústria, inovação e infraestrutura</strong><br>Infraestrutura resiliente, BIM, IoT, manutenção preditiva, materiais de baixo carbono e automação.</div>
+          <div class="card"><strong>ODS 11: Cidades sustentáveis</strong><br>Mobilidade, construção verde, habitação segura, gestão de resíduos, resiliência urbana e acessibilidade.</div>
+        </div>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> qual ODS é mais transversal para todas as engenharias?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">ODS 1, porque toda engenharia se limita ao combate direto à pobreza monetária.</button>
+            <button class="choice blue" data-correct="false">ODS 5, porque todos os projetos de engenharia são exclusivamente políticas de igualdade de gênero.</button>
+            <button class="choice gold" data-correct="true" data-explain="Comentário: o ODS 9 envolve indústria, inovação e infraestrutura, temas que atravessam engenharia civil, elétrica, produção, mecânica, ambiental e outras áreas.">ODS 9, pois indústria, inovação e infraestrutura atravessam praticamente todos os campos de engenharia.</button>
+            <button class="choice green" data-correct="false">ODS 17, porque substitui todos os demais objetivos por parcerias institucionais.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Governança</p><h2>O “G” do ESG conversa com a Lei 5.194/66</h2></div>
+      <div class="body">
+        <p class="lead">Governança em engenharia significa decidir, documentar e responder de modo verificável. Ela aproxima ESG, legislação profissional, ART, normas e fiscalização.</p>
+        <ul>
+          <li>Conformidade: seguir leis, normas, licenças e atribuições profissionais.</li>
+          <li>Transparência: registrar decisões, premissas, riscos e alterações.</li>
+          <li>Responsabilização: saber quem projeta, executa, fiscaliza e aprova.</li>
+          <li>Gestão de risco: prevenir falhas antes que virem acidente ou dano ambiental.</li>
+        </ul>
+        <div class="fix-quiz">
+          <div class="check"><strong>Fixação objetiva:</strong> por que ART e rastreabilidade também são governança?</div>
+          <div class="choices">
+            <button class="choice red" data-correct="false">Porque governança é apenas marketing de sustentabilidade e não depende de documentos técnicos.</button>
+            <button class="choice blue" data-correct="true" data-explain="Comentário: ART e rastreabilidade identificam responsáveis, permitem verificar conformidade e tornam decisões técnicas auditáveis. Isso é governança aplicada.">Porque identificam responsáveis, permitem verificar conformidade e tornam decisões técnicas auditáveis.</button>
+            <button class="choice gold" data-correct="false">Porque a ART elimina a necessidade de fiscalização e de cumprimento de normas técnicas.</button>
+            <button class="choice green" data-correct="false">Porque rastreabilidade serve apenas para controlar estoque de materiais, sem relação com responsabilidade.</button>
+          </div>
+          <div class="quiz-feedback">Selecione uma alternativa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 1</p><h2>Registro em outra região</h2></div>
+      <div class="body">
+        <p class="quiz-question">Um engenheiro registrado no CREA do Pará passa a executar uma obra no Amazonas. Para atuar regularmente, ele deverá:</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Solicitar novo diploma</button>
+          <button class="choice blue" data-correct="true" data-explain="Comentário: o registro profissional precisa ser regularizado na jurisdição onde o serviço será executado. O visto permite atuação em outro CREA sem exigir novo diploma.">Obter o visto de seu registro na outra região.</button>
+          <button class="choice gold" data-correct="false">Realizar concurso público.</button>
+          <button class="choice green" data-correct="false">Registrar-se apenas na prefeitura local.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 2</p><h2>Exercício ilegal</h2></div>
+      <div class="body">
+        <p class="quiz-question">Qual artigo define situações de exercício ilegal da profissão?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Art. 1º</button>
+          <button class="choice blue" data-correct="false">Art. 7º</button>
+          <button class="choice gold" data-correct="true" data-explain="Comentário: o Art. 6º reúne hipóteses de exercício ilegal, como atuar sem registro, extrapolar atribuições, emprestar nome ou continuar atuando suspenso.">Art. 6º</button>
+          <button class="choice green" data-correct="false">Art. 24</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 3</p><h2>Carteira profissional</h2></div>
+      <div class="body">
+        <p class="quiz-question">A carteira profissional emitida por um CREA, para efeitos da Lei nº 5.194/1966, substitui o diploma.</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Falso, porque somente o diploma universitário tem validade perante a Lei nº 5.194/1966.</button>
+          <button class="choice blue" data-correct="true" data-explain="Comentário: o Art. 56 estabelece que a carteira profissional substitui o diploma para efeitos da lei, identifica o registro e possui fé pública.">Verdadeiro, para efeitos da lei, pois a carteira profissional identifica o registro e possui fé pública.</button>
+          <button class="choice gold" data-correct="false">Falso, porque a carteira profissional vale apenas como crachá interno do CREA.</button>
+          <button class="choice green" data-correct="false">Verdadeiro, mas apenas quando o profissional estiver atuando em outro estado sem visto.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 4</p><h2>Profissional suspenso</h2></div>
+      <div class="body">
+        <p class="quiz-question">O engenheiro que, suspenso de seu exercício, continue em atividade exerce ilegalmente a profissão.</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Falso, porque a suspensão impede apenas a emissão de novas ARTs, mas não o exercício técnico.</button>
+          <button class="choice blue" data-correct="false">Falso, desde que o profissional atue sob autorização do contratante.</button>
+          <button class="choice gold" data-correct="true" data-explain="Comentário: a suspensão impede o exercício regular; continuar atuando durante a suspensão caracteriza exercício ilegal conforme a lógica do Art. 6º.">Verdadeiro, pois continuar atuando durante a suspensão é hipótese de exercício ilegal.</button>
+          <button class="choice green" data-correct="false">Verdadeiro apenas quando a atividade envolver obra pública.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 5</p><h2>Penalidades</h2></div>
+      <div class="body">
+        <p class="quiz-question"><strong>Não</strong> é penalidade aplicável por infração da Lei nº 5.194/1966 a:</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Multa.</button>
+          <button class="choice blue" data-correct="false">Censura pública.</button>
+          <button class="choice gold" data-correct="false">Advertência reservada.</button>
+          <button class="choice green" data-correct="true" data-explain="Comentário: a lei trabalha com suspensão temporária e cancelamento definitivo, não com a expressão suspensão definitiva do registro como penalidade aplicável.">Suspensão definitiva do registro.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 6</p><h2>Alteração de projeto</h2></div>
+      <div class="body">
+        <p class="quiz-question">As alterações do projeto só poderão ser feitas pelo profissional que o executou, exceto se estiver impedido ou se recusar.</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Falso, pois qualquer profissional registrado pode alterar projeto alheio sem consultar o autor.</button>
+          <button class="choice blue" data-correct="true" data-explain="Comentário: o Art. 18 protege a autoria do projeto; se outro profissional habilitado altera o projeto nas hipóteses permitidas, ele assume a responsabilidade pela modificação.">Verdadeiro, e o novo profissional habilitado assume responsabilidade pelo projeto modificado.</button>
+          <button class="choice gold" data-correct="false">Falso, porque a responsabilidade por qualquer alteração permanece sempre com o autor original.</button>
+          <button class="choice green" data-correct="false">Verdadeiro apenas quando a alteração não afetar custo ou prazo da obra.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 7</p><h2>Art. 1º</h2></div>
+      <div class="body">
+        <p class="quiz-question">Qual alternativa reúne apenas atividades expressamente previstas no Art. 1º?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Fiscalização, perícia e vistoria</button>
+          <button class="choice blue" data-correct="false">Registro profissional, fiscalização e multas</button>
+          <button class="choice gold" data-correct="false">Ensino, pesquisa e experimentação</button>
+          <button class="choice green" data-correct="true" data-explain="Comentário: esses exemplos aparecem na caracterização do Art. 1º. Fiscalização, perícia, vistoria, ensino e pesquisa se relacionam mais diretamente ao Art. 7º.">Recursos naturais, comunicações e desenvolvimento industrial</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 8</p><h2>Anuidade e cancelamento</h2></div>
+      <div class="body">
+        <p class="quiz-question">Após quantos anos sem anuidade o registro é cancelado?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">1</button>
+          <button class="choice blue" data-correct="true" data-explain="Comentário: a questão cobra o prazo de dois anos sem pagamento de anuidade para cancelamento do registro, conforme explorado no Kahoot.">2</button>
+          <button class="choice gold" data-correct="false">3</button>
+          <button class="choice green" data-correct="false">5</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 9</p><h2>Suspensão e atividade</h2></div>
+      <div class="body">
+        <p class="quiz-question">O profissional suspenso que continua atuando:</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Age regularmente</button>
+          <button class="choice blue" data-correct="false">Comete infração leve</button>
+          <button class="choice gold" data-correct="false">Atua sob supervisão</button>
+          <button class="choice green" data-correct="true" data-explain="Comentário: a suspensão retira temporariamente a possibilidade de exercício regular. Continuar atuando nesse período é exercício ilegal.">Exerce ilegalmente a profissão</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 10</p><h2>Responsável por alterações</h2></div>
+      <div class="body">
+        <p class="quiz-question">Quem responde por alterações em projeto de outro autor?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Contratante</button>
+          <button class="choice blue" data-correct="true" data-explain="Comentário: quem altera projeto de outro autor, quando habilitado e autorizado nas condições legais, assume a responsabilidade pela alteração realizada.">Novo profissional responsável</button>
+          <button class="choice gold" data-correct="false">CREA</button>
+          <button class="choice green" data-correct="false">Prefeitura</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 11</p><h2>Atribuições profissionais</h2></div>
+      <div class="body">
+        <p class="quiz-question">Qual artigo define as atribuições profissionais?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Art. 1º</button>
+          <button class="choice blue" data-correct="true" data-explain="Comentário: o Art. 7º lista atividades profissionais como projeto, perícia, vistoria, fiscalização, direção e execução de obras e serviços técnicos.">Art. 7º</button>
+          <button class="choice gold" data-correct="false">Art. 3º</button>
+          <button class="choice green" data-correct="false">Art. 6º</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 12</p><h2>CREA e profissões fiscalizadas</h2></div>
+      <div class="body">
+        <p class="quiz-question">Atualmente os CREAs são órgãos de fiscalização do exercício das profissões de engenharia, arquitetura e agronomia.</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Verdadeiro, porque a Lei nº 5.194/1966 permanece exatamente igual em todos os seus efeitos profissionais.</button>
+          <button class="choice blue" data-correct="true" data-explain="Comentário: embora a Lei 5.194/1966 seja o marco histórico, a arquitetura hoje é fiscalizada pelo CAU, criado por legislação posterior.">Falso, pois a arquitetura hoje possui conselho próprio, o CAU; o CREA não fiscaliza arquitetos como antes.</button>
+          <button class="choice gold" data-correct="false">Verdadeiro, mas somente para profissionais sem carteira emitida.</button>
+          <button class="choice green" data-correct="false">Falso, porque o CREA não fiscaliza nenhuma profissão, apenas universidades.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 13</p><h2>Agenda 2030</h2></div>
+      <div class="body">
+        <p class="quiz-question">Qual é o principal objetivo da Agenda 2030 da Organização das Nações Unidas?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Promover apenas o crescimento econômico mundial.</button>
+          <button class="choice blue" data-correct="false">Regulamentar a atividade industrial dos países.</button>
+          <button class="choice gold" data-correct="true" data-explain="Comentário: a Agenda 2030 organiza objetivos e metas globais de desenvolvimento sustentável; ela não é uma lei industrial nem apenas um programa econômico.">Estabelecer Objetivos de Desenvolvimento Sustentável (ODS).</button>
+          <button class="choice green" data-correct="false">Criar leis ambientais obrigatórias para todos os países.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 14</p><h2>Quantidade de ODS</h2></div>
+      <div class="body">
+        <p class="quiz-question">Quantos Objetivos de Desenvolvimento Sustentável (ODS) compõem a Agenda 2030?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">10</button>
+          <button class="choice blue" data-correct="false">16</button>
+          <button class="choice gold" data-correct="false">15</button>
+          <button class="choice green" data-correct="true" data-explain="Comentário: a Agenda 2030 é composta por 17 Objetivos de Desenvolvimento Sustentável e 169 metas associadas.">17</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 15</p><h2>Ano da Agenda 2030</h2></div>
+      <div class="body">
+        <p class="quiz-question">Em que ano a Agenda 2030 foi adotada?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">2000</button>
+          <button class="choice blue" data-correct="false">2010</button>
+          <button class="choice gold" data-correct="true" data-explain="Comentário: a Agenda 2030 foi adotada em 2015 pelos países-membros da ONU, com horizonte de ação até 2030.">2015</button>
+          <button class="choice green" data-correct="false">2020</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 16</p><h2>Sigla ESG</h2></div>
+      <div class="body">
+        <p class="quiz-question">O que significa a sigla ESG?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Economia, Sociedade e Gestão</button>
+          <button class="choice blue" data-correct="false">Energia, Sustentabilidade e Gestão</button>
+          <button class="choice gold" data-correct="false">Ecologia, Sociedade e Governo</button>
+          <button class="choice green" data-correct="true" data-explain="Comentário: ESG corresponde aos pilares Environmental, Social and Governance, em português: Ambiental, Social e Governança.">Ambiental, Social e Governança</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 17</p><h2>Pilar social</h2></div>
+      <div class="body">
+        <p class="quiz-question">Uma empresa reduz acidentes de trabalho. Isso fortalece qual pilar?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Ambiental</button>
+          <button class="choice blue" data-correct="false">Governança</button>
+          <button class="choice gold" data-correct="true" data-explain="Comentário: reduzir acidentes de trabalho protege pessoas, trabalhadores e saúde ocupacional, portanto fortalece o pilar social.">Social</button>
+          <button class="choice green" data-correct="false">Econômico</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 18</p><h2>Três pilares ESG</h2></div>
+      <div class="body">
+        <p class="quiz-question">Uma construtora reduz acidentes, recicla e segrega resíduos, cria um código de ética. Quantos pilares do ESG ela atende?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">1</button>
+          <button class="choice blue" data-correct="true" data-explain="Comentário: reduzir acidentes atua no social, reciclar e segregar resíduos atua no ambiental, e criar código de ética atua na governança.">3</button>
+          <button class="choice gold" data-correct="false">2</button>
+          <button class="choice green" data-correct="false">4</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 19</p><h2>ODS aplicados à obra</h2></div>
+      <div class="body">
+        <p class="quiz-question">Uma construtora utiliza energia solar, reaproveita água e reduz resíduos. Ela contribui diretamente para quais ODS?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">1, 2 e 3</button>
+          <button class="choice blue" data-correct="true" data-explain="Comentário: energia solar se liga ao ODS 7, reaproveitamento de água ao ODS 6 e redução de resíduos ao ODS 12.">7, 6 e 12</button>
+          <button class="choice gold" data-correct="false">14, 15 e 16</button>
+          <button class="choice green" data-correct="false">4, 5 e 10</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Questão objetiva · 20</p><h2>Questão não técnica</h2></div>
+      <div class="body">
+        <p class="quiz-question">Qual o melhor professor da Unama?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Renato</button>
+          <button class="choice blue" data-correct="false">Manoel</button>
+          <button class="choice gold" data-correct="true" data-explain="Comentário: esta alternativa consta como correta no questionário original; trata-se de item não técnico, sem conteúdo de engenharia.">Ricardo</button>
+          <button class="choice green" data-correct="false">João</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Integração final</p><h2>O raciocínio que resolve questão de prova</h2></div>
+      <div class="body">
+        <p class="lead">Quando a prova trouxer um caso prático, não responda por intuição. Siga uma sequência de diagnóstico.</p>
+        <div class="flow">
+          <div>1. Qual era o ato técnico? Projeto, laudo, vistoria, execução, fiscalização ou alteração?</div>
+          <div>2. Quem estava legalmente habilitado e dentro das atribuições?</div>
+          <div>3. Havia ART, autoria, registro e participação efetiva?</div>
+          <div>4. Houve descumprimento de norma, projeto, fiscalização ou manutenção?</div>
+          <div>5. O caso envolve Art. 1º, 6º, 7º, 18 ou 56 da Lei 5.194/1966?</div>
+          <div>6. Qual dimensão ESG ou risco social aparece no problema?</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Mapa conceitual</p><h2>Todos os conteúdos em uma cadeia</h2></div>
+      <div class="body">
+        <div class="flow">
+          <div>Engenharia como profissão de interesse social e humano</div>
+          <div>Formação técnica precisa de habilitação legal e atribuições</div>
+          <div>Projeto transforma ideia em solução documentada e executável</div>
+          <div>ART, autoria e registro vinculam profissional à responsabilidade</div>
+          <div>Fiscalização e manutenção reduzem imperícia, negligência e imprudência</div>
+          <div>Prevenção de acidentes protege vidas, patrimônio e meio ambiente</div>
+          <div>ESG e ODS ampliam o horizonte: ambiente, social e governança</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="head"><p class="tag">Revisão de véspera</p><h2>O essencial para não cair nas armadilhas</h2></div>
+      <div class="body">
+        <ul>
+          <li><strong>Art. 1º:</strong> caracterização da profissão por interesse social e humano.</li>
+          <li><strong>Art. 6º:</strong> exercício ilegal, inclusive sem registro, fora das atribuições ou emprestando nome.</li>
+          <li><strong>Art. 7º:</strong> atividades e atribuições gerais da profissão.</li>
+          <li><strong>Art. 18:</strong> alteração de projeto e responsabilidade pelo projeto modificado.</li>
+          <li><strong>Art. 56:</strong> carteira profissional, número de registro, título, fé pública e identificação.</li>
+          <li><strong>Projeto:</strong> desenho mais cálculo, memorial, especificação, norma, compatibilização e responsabilidade.</li>
+          <li><strong>Acidentes:</strong> cadeia causal, não azar. Diferencie imperícia, negligência e imprudência.</li>
+          <li><strong>ESG:</strong> ambiental, social e governança, não só pauta ambiental.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="slide title-slide">
+      <div class="body">
+        <div class="stamp">Simulado final</div>
+        <h1>Simulado final: 15 questões integradas de revisão</h1>
+        <p class="subtitle">Nesta etapa, cada questão deve ser respondida antes da leitura do comentário. Os distratores foram elaborados para reproduzir confusões frequentes em avaliações.</p>
+        <p class="footerline">Orientação: em caso de erro, retome o bloco conceitual correspondente antes de prosseguir.</p>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Simulado final · Questão 1</p><h2>Art. 1º e função social</h2></div>
+      <div class="body">
+        <p class="quiz-question">Segundo o Art. 1º da Lei 5.194/1966, por que a engenharia é profissão de interesse social e humano?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Porque toda atividade de engenharia é necessariamente prestada pelo Estado.</button>
+          <button class="choice blue" data-correct="true" data-explain="Comentário: o Art. 1º caracteriza a engenharia por realizações que afetam recursos, edificações, comunicações, infraestrutura, desenvolvimento produtivo e a coletividade.">Porque suas realizações afetam coletividades, infraestrutura, recursos naturais, cidades e desenvolvimento produtivo.</button>
+          <button class="choice gold" data-correct="false">Porque apenas engenheiros podem administrar empresas industriais, ainda que sem registro.</button>
+          <button class="choice green" data-correct="false">Porque o Art. 1º trata das penalidades aplicáveis aos profissionais infratores.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Simulado final · Questão 2</p><h2>Diploma sem registro</h2></div>
+      <div class="body">
+        <p class="quiz-question">Um profissional formado em engenharia, mas sem registro no CREA, assina um laudo técnico. Qual dispositivo é mais diretamente relacionado?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Art. 1º, pois ele define o interesse social da engenharia.</button>
+          <button class="choice blue" data-correct="false">Art. 7º, pois qualquer laudo autoriza automaticamente o exercício profissional.</button>
+          <button class="choice gold" data-correct="true" data-explain="Comentário: atuar ou prestar serviço técnico reservado sem registro se enquadra nas hipóteses de exercício ilegal previstas no Art. 6º.">Art. 6º, pois atuar sem registro em atividade reservada configura exercício ilegal.</button>
+          <button class="choice green" data-correct="false">Art. 56, pois a carteira profissional elimina a necessidade de registro.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Simulado final · Questão 3</p><h2>Limites do Art. 7º</h2></div>
+      <div class="body">
+        <p class="quiz-question">Por que o Art. 7º não autoriza qualquer engenheiro a atuar em qualquer área?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Porque o Art. 7º foi revogado e não possui aplicação profissional.</button>
+          <button class="choice blue" data-correct="true" data-explain="Comentário: o Art. 7º lista atividades gerais, mas a atuação concreta depende de formação, atribuições específicas, registro e competência técnica.">Porque ele lista atividades gerais, mas a atuação depende de formação, atribuições específicas, registro e competência.</button>
+          <button class="choice gold" data-correct="false">Porque o Art. 7º se aplica apenas a professores universitários e pesquisadores.</button>
+          <button class="choice green" data-correct="false">Porque qualquer atividade técnica depende apenas de autorização do contratante.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Simulado final · Questão 4</p><h2>Alteração de projeto</h2></div>
+      <div class="body">
+        <p class="quiz-question">Durante a obra, um terceiro altera projeto estrutural sem consultar o autor. Qual é o problema jurídico-técnico central?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Não há problema se a alteração reduzir custo e prazo.</button>
+          <button class="choice blue" data-correct="false">O problema é apenas estético, pois a responsabilidade fica sempre com a construtora.</button>
+          <button class="choice gold" data-correct="true" data-explain="Comentário: o Art. 18 protege autoria e responsabilidade: alteração deve ser feita pelo autor ou, nas hipóteses legais, por profissional habilitado que assuma a modificação.">Há violação da lógica de autoria e responsabilidade técnica prevista no Art. 18.</button>
+          <button class="choice green" data-correct="false">A alteração passa automaticamente a ser responsabilidade do CREA.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Simulado final · Questão 5</p><h2>Compatibilização</h2></div>
+      <div class="body">
+        <p class="quiz-question">Qual alternativa define melhor compatibilização de projetos?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Escolher o projeto mais barato antes da contratação da obra.</button>
+          <button class="choice blue" data-correct="true" data-explain="Comentário: compatibilizar é cruzar disciplinas para detectar conflitos antes da execução, como eletroduto atravessando viga ou tubulação em rota estrutural crítica.">Integrar disciplinas para detectar conflitos técnicos antes da execução, como interferências entre estrutura e instalações.</button>
+          <button class="choice gold" data-correct="false">Transferir para a equipe de obra a decisão sobre todos os conflitos entre projetos.</button>
+          <button class="choice green" data-correct="false">Emitir ART separada para cada prancha sem revisar interfaces.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Simulado final · Questão 6</p><h2>Imperícia, negligência e imprudência</h2></div>
+      <div class="body">
+        <p class="quiz-question">Qual alternativa diferencia corretamente imperícia, negligência e imprudência?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="true" data-explain="Comentário: imperícia é falta de conhecimento/habilidade; negligência é omissão ou descuido; imprudência é ação precipitada sem cautela.">Imperícia é falta de competência técnica; negligência é omissão; imprudência é ação precipitada.</button>
+          <button class="choice blue" data-correct="false">Imperícia é omissão; negligência é excesso de conhecimento; imprudência é cumprimento de norma.</button>
+          <button class="choice gold" data-correct="false">As três expressões são sinônimas jurídicas para qualquer erro de engenharia.</button>
+          <button class="choice green" data-correct="false">Negligência só ocorre quando há intenção de causar dano.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Simulado final · Questão 7</p><h2>Empréstimo de nome</h2></div>
+      <div class="body">
+        <p class="quiz-question">Uma empresa usa o CREA de um engenheiro que não participa da obra. Qual hipótese do Art. 6º aparece?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Exercício regular por representação empresarial.</button>
+          <button class="choice blue" data-correct="false">Apenas falta de marketing profissional.</button>
+          <button class="choice gold" data-correct="true" data-explain="Comentário: o Art. 6º inclui a hipótese de emprestar o nome sem participação real nos trabalhos, configurando exercício ilegal.">Empréstimo de nome sem participação real nos trabalhos.</button>
+          <button class="choice green" data-correct="false">Aplicação automática do Art. 1º, sem infração profissional.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Simulado final · Questão 8</p><h2>Armadilha do Art. 56</h2></div>
+      <div class="body">
+        <p class="quiz-question">O Art. 56 trata de infrações e penalidades?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Sim, ele define diretamente multas, advertências e censura pública.</button>
+          <button class="choice blue" data-correct="true" data-explain="Comentário: o Art. 56 trata da carteira profissional, número de registro, título e fé pública. Infrações aparecem especialmente no Art. 6º; penalidades ficam no Título IV.">Não; ele trata da carteira profissional e seus efeitos legais, não das penalidades.</button>
+          <button class="choice gold" data-correct="false">Sim, mas apenas para profissionais sem anuidade em dia.</button>
+          <button class="choice green" data-correct="false">Não, porque o Art. 56 trata de ODS e Agenda 2030.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Simulado final · Questão 9</p><h2>Instalação que “funciona”</h2></div>
+      <div class="body">
+        <p class="quiz-question">Por que uma instalação elétrica que funciona pode continuar irregular e perigosa?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="true" data-explain="Comentário: funcionamento aparente não comprova dimensionamento, proteção, aterramento, conformidade normativa nem segurança de uso.">Porque funcionamento aparente não comprova proteção, aterramento, dimensionamento, norma ou segurança.</button>
+          <button class="choice blue" data-correct="false">Porque toda instalação elétrica é irregular até apresentar uma falha visível.</button>
+          <button class="choice gold" data-correct="false">Porque regularidade depende apenas de aprovação estética do cliente.</button>
+          <button class="choice green" data-correct="false">Porque o CREA substitui os dispositivos de proteção quando há ART.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Simulado final · Questão 10</p><h2>ESG e governança</h2></div>
+      <div class="body">
+        <p class="quiz-question">Qual alternativa conecta corretamente ESG, governança, ART e responsabilidade técnica?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Governança é apenas código de ética empresarial, sem relação com projeto, ART ou fiscalização.</button>
+          <button class="choice blue" data-correct="true" data-explain="Comentário: governança exige conformidade, rastreabilidade, responsáveis identificados, transparência e gestão de risco; ART e responsabilidade técnica materializam isso na engenharia.">Governança exige conformidade, rastreabilidade, responsáveis identificados e gestão de risco técnico.</button>
+          <button class="choice gold" data-correct="false">ESG substitui a Lei 5.194/1966 em projetos sustentáveis.</button>
+          <button class="choice green" data-correct="false">ART é documento ambiental que mede emissão de carbono.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Simulado final · Questão 11</p><h2>Erro de projeto x erro de execução</h2></div>
+      <div class="body">
+        <p class="quiz-question">Qual alternativa diferencia melhor erro de projeto e erro de execução?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Erro de projeto é sempre estético; erro de execução é sempre jurídico.</button>
+          <button class="choice blue" data-correct="true" data-explain="Comentário: erro de projeto nasce na concepção, cálculo, especificação ou compatibilização; erro de execução ocorre ao realizar a obra ou serviço fora do projeto, norma ou procedimento.">Erro de projeto falha na concepção/cálculo/especificação; erro de execução falha ao realizar o projeto em campo.</button>
+          <button class="choice gold" data-correct="false">Erro de execução só existe quando não há projeto formal.</button>
+          <button class="choice green" data-correct="false">Erro de projeto não gera responsabilidade se houver ART.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Simulado final · Questão 12</p><h2>Manutenção e segurança</h2></div>
+      <div class="body">
+        <p class="quiz-question">Por que a manutenção periódica é parte da segurança de engenharia?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Porque manutenção corrige automaticamente qualquer erro de projeto inicial.</button>
+          <button class="choice blue" data-correct="false">Porque a manutenção só tem função estética e patrimonial.</button>
+          <button class="choice gold" data-correct="true" data-explain="Comentário: sistemas degradam com uso, ambiente e mudança de ocupação. Sem manutenção, uma condição segura pode evoluir para risco de colapso, incêndio ou interdição.">Porque sistemas degradam com uso e tempo, podendo transformar uma condição segura em risco técnico.</button>
+          <button class="choice green" data-correct="false">Porque após a entrega a responsabilidade técnica deixa de existir para todos os envolvidos.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Simulado final · Questão 13</p><h2>ODS e engenharia</h2></div>
+      <div class="body">
+        <p class="quiz-question">Qual alternativa relaciona corretamente ODS 6, 7, 9 e 11 com engenharia?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">ODS 6 energia, ODS 7 cidades, ODS 9 água, ODS 11 indústria.</button>
+          <button class="choice blue" data-correct="true" data-explain="Comentário: ODS 6 envolve água e saneamento; ODS 7 energia limpa; ODS 9 indústria, inovação e infraestrutura; ODS 11 cidades sustentáveis.">ODS 6 saneamento; ODS 7 energia; ODS 9 indústria, inovação e infraestrutura; ODS 11 cidades sustentáveis.</button>
+          <button class="choice gold" data-correct="false">Todos se referem exclusivamente à governança corporativa.</button>
+          <button class="choice green" data-correct="false">Nenhum deles tem relação direta com engenharia, apenas com política internacional.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Simulado final · Questão 14</p><h2>Empresa sem responsável efetivo</h2></div>
+      <div class="body">
+        <p class="quiz-question">Uma obra foi executada por empresa sem profissional habilitado efetivo. Quais riscos aparecem?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Apenas risco comercial, sem relevância técnica ou legal.</button>
+          <button class="choice blue" data-correct="false">Nenhum risco se a empresa tiver CNPJ ativo e contrato assinado.</button>
+          <button class="choice gold" data-correct="true" data-explain="Comentário: a ausência de profissional habilitado efetivo pode configurar exercício ilegal, fragiliza a responsabilidade técnica e aumenta risco de falhas, danos e sanções.">Exercício ilegal, ausência de responsabilidade técnica efetiva, falhas de segurança e sanções administrativas ou civis.</button>
+          <button class="choice green" data-correct="false">Apenas necessidade de trocar o nome comercial da empresa.</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide kahoot-slide">
+      <div class="head"><p class="tag">Simulado final · Questão 15</p><h2>Investigando responsabilidade técnica</h2></div>
+      <div class="body">
+        <p class="quiz-question">Em um acidente de engenharia, qual conjunto de perguntas ajuda melhor a identificar responsabilidade técnica?</p>
+        <div class="choices">
+          <button class="choice red" data-correct="false">Quem pagou a obra, qual foi a marca dos equipamentos e qual era o prazo comercial?</button>
+          <button class="choice blue" data-correct="true" data-explain="Comentário: responsabilidade técnica exige rastrear autoria, execução, fiscalização, alteração, ART, atribuições, normas e cadeia causal do acidente.">Quem projetou, executou, fiscalizou, alterou, assinou ART, tinha atribuição e cumpriu normas?</button>
+          <button class="choice gold" data-correct="false">Qual profissional apareceu primeiro na obra e quem tinha maior experiência informal?</button>
+          <button class="choice green" data-correct="false">Quem era o cliente e se ele aceitou verbalmente o risco?</button>
+        </div>
+        <div class="quiz-feedback">Selecione uma alternativa.</div>
+      </div>
+    </section>
+
+    <section class="slide title-slide">
+      <div class="body">
+        <div class="stamp">Fechamento</div>
+        <h1>Síntese para a avaliação</h1>
+        <p class="subtitle">A análise deve partir do ato técnico, da habilitação, das atribuições, da responsabilidade, da norma aplicável, do risco e do impacto social. Essa sequência organiza a maioria dos casos práticos.</p>
+        <p class="footerline">Encerramento</p>
+      </div>
+    </section>
+
+    <nav class="controls" aria-label="Controles da apresentação">
+      <button id="prev" type="button" aria-label="Slide anterior">Anterior</button>
+      <div class="progress" aria-hidden="true"><div class="bar" id="bar"></div></div>
+      <span class="counter" id="counter">1/1</span>
+      <button id="next" type="button" aria-label="Próximo slide">Próximo</button>
+      <span class="kbd">Use ← → ou Espaço · Ctrl+P para imprimir/salvar em PDF</span>
+    </nav>
+  </main>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const prev = document.getElementById("prev");
+    const next = document.getElementById("next");
+    const counter = document.getElementById("counter");
+    const bar = document.getElementById("bar");
+    let index = 0;
+
+    function show(i) {
+      index = Math.max(0, Math.min(i, slides.length - 1));
+      slides.forEach((slide, n) => slide.classList.toggle("active", n === index));
+      counter.textContent = `${index + 1}/${slides.length}`;
+      bar.style.width = `${((index + 1) / slides.length) * 100}%`;
+      prev.disabled = index === 0;
+      next.disabled = index === slides.length - 1;
+    }
+
+    prev.addEventListener("click", () => show(index - 1));
+    next.addEventListener("click", () => show(index + 1));
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === " ") {
+        event.preventDefault();
+        show(index + 1);
+      }
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        show(index - 1);
+      }
+      if (event.key === "Home") show(0);
+      if (event.key === "End") show(slides.length - 1);
+    });
+
+    document.querySelectorAll(".kahoot-slide, .fix-quiz").forEach((quiz) => {
+      const choices = Array.from(quiz.querySelectorAll(".choice"));
+      const feedback = quiz.querySelector(".quiz-feedback");
+      choices.forEach((choice) => {
+        choice.addEventListener("click", () => {
+          const isCorrect = choice.dataset.correct === "true";
+          const correctChoice = choices.find((item) => item.dataset.correct === "true");
+          const explanation = correctChoice?.dataset.explain || "A alternativa correta ficou destacada.";
+          choices.forEach((item) => {
+            item.classList.add("revealed");
+            item.classList.toggle("correct", item.dataset.correct === "true");
+            item.classList.remove("wrong", "selected");
+          });
+          choice.classList.add("selected");
+          if (!isCorrect) choice.classList.add("wrong");
+          feedback.classList.remove("good", "bad");
+          feedback.classList.add(isCorrect ? "good" : "bad");
+          feedback.textContent = isCorrect
+            ? `Resposta correta. ${explanation}`
+            : `Resposta incorreta. ${explanation}`;
+        });
+      });
+    });
+
+    show(0);
+  </script>
+</body>
+</html>
+
